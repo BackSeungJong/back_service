@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!-- 전통적인 데이터베이스 칼럼명 형태인 A_COLUMN을 CamelCase형태의 자바 프로퍼티명 형태인 aColumn으로 자동으로 매핑하도록 함 -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- 지연로딩과 요청에 의한 로딩을 병행해서 처리한다 -->
+        <setting name="aggressiveLazyLoading" value="true"/>
+        <!-- 데이터베이스로의 응답을 얼마나 오래 기다릴지를 판단하는 타임아웃을 설정 -->
+        <setting name="defaultStatementTimeout" value="100"/>
+        <!-- gGeon :   파라미터에 Null 값이 있을 경우 에러 처리 -->
+        <setting name="jdbcTypeForNull" value="VARCHAR"/>
+
+    </settings>
+
+    <typeAliases>
+        <typeAlias alias="templeateMap" type="com.back.service.util.TempleateMap"/>
+        <package name="com.back.service.domain"/>
+        <!--        <package name="com.developers.admin.request"/>-->
+    </typeAliases>
+
+    <plugins>
+        <plugin interceptor="com.github.miemiedev.mybatis.paginator.OffsetLimitInterceptor">
+            <property name="dialectClass" value="com.github.miemiedev.mybatis.paginator.dialect.PostgreSQLDialect"/>
+        </plugin>
+    </plugins>
+
+</configuration>
