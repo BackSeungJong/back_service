@@ -3,6 +3,8 @@ package com.back.service.config;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -20,12 +22,12 @@ import javax.sql.DataSource;
 @Primary
 public class DatabaseConfig {
 
-    @Autowired
-    Environment env;
-
     public final String MAPPER_LOCATIONS_PATH = "classpath:mapper/**/*.xml";
     public final String CONFIG_PATH = "classpath:mybatis-config.xml";
     public final String JNDI_PRIFIX = "java:/comp/env/";
+    @Autowired
+    Environment env;
+    private Logger logger = LoggerFactory.getLogger(DatabaseConfig.class);
 
     @Bean(name = "dataSource")
     public DataSource dataSource() throws IllegalArgumentException, NamingException {
@@ -33,6 +35,7 @@ public class DatabaseConfig {
         String jndiName = JNDI_PRIFIX + env.getProperty("spring.datasource.jndi-name");
         /*return (DataSource) new JndiDataSourceLookup().getDataSource(jndiName); */
 
+        logger.info("name >> " + jndiName);
 
         JndiObjectFactoryBean bean = new JndiObjectFactoryBean();
         bean.setJndiName(jndiName);
