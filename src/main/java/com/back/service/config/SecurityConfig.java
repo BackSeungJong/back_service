@@ -76,11 +76,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(
                         "/api/back/executeSignIn"
-                        ,"/api/back/userMng/search/**"
+                        ,"/api/userMng/**"
                 ).permitAll()
                 .anyRequest().authenticated(); // 나머지 API는 전부 인증 필요
 
-                // JwtFilter를 addFilterBefore로 등록했던 JwtSecurityConfig 클래스를 적용
+                // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
+//                .and()
+//                .apply(new JwtSecurityConfig(tokenProvider, adminLoginService, adminFidoService,
+//                        adminAPIAuthService));
 
 
 

@@ -10,7 +10,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -24,10 +26,16 @@ public class UserMngController {
     private UserMngService userMngService;
 
     @GetMapping("/search")
-    public ResponseBase getUserList(User searchInfo) {
+    public ResponseBase getUserList(@RequestParam(name = "searchInfo", required = false, defaultValue = "") String searchInfo,
+                                    @RequestParam(name = "pageNo", required = false, defaultValue = "1") String pageNo) {
         logger.info("api get success");
-        List<User> resultList = userMngService.selectUserList(searchInfo);
 
+        User params = new User();
+        params.setSearchInfo(searchInfo);
+        params.setPageNo(Integer.parseInt(pageNo));
+        List<User> resultList = userMngService.selectUserList(params);
+
+        logger.info("resultList" + resultList);
         return ResponseBase.builder()
                 .result(CommonCode.ApiResult.OK.name())
                 .build();

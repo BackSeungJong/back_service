@@ -7,8 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Builder
-public class User {
+public class User extends Page{
 
     private int userSn;
     private String userNm;
